@@ -1,0 +1,21 @@
+<aura:component >
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="title" type="String"/>
+    
+    <aura:registerEvent name="isButtonClose" type="c:EventButtonClose"/>
+    <aura:registerEvent name="isButtonYes" type="c:EventButtonYes"/>
+    
+    <div class="slds-p-top_large slds-text-align_center slds-text-heading_large">{!v.title}
+    </div>
+    <div class="slds-align_absolute-center" style="height:5rem">{!v.message}</div>
+    <footer class="slds-modal__footer">
+        <lightning:button variant="neutral"
+                          label="{!$Label.c.Cancel}"
+                          title="{!$Label.c.Cancel}"
+                          onclick="{!c.closeModal}"/>
+        <lightning:button variant="brand"
+                          label="{!$Label.c.Yes}"
+                          title="{!$Label.c.Yes}"
+                          onclick="{!c.registration}"/>
+    </footer>
+</aura:component>

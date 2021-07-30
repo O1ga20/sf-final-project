@@ -1,0 +1,78 @@
+<aura:component controller="TouristAssignmentController" access="global"
+                implements="force:appHostable,flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable">
+    <aura:attribute name="touristId" type="Id" access="public"/>
+    <aura:attribute name="trips" type="List" access="public"/>
+    <aura:attribute name="activeInformationTrip" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="trip" type="Trip__c" access="public"/>
+    <aura:attribute name="selectedTripId" type="Id" access="public"/>
+    <aura:attribute name="freeSeats" type="Integer" access="public"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" access="public"/>
+    <aura:attribute name="mapMarkers" type="List" access="public"/>
+    <aura:attribute name="markersTitle" type="String" access="public"/>
+    <aura:attribute name="selectedMarkerValue" type="String" default="Belarus" access="public"/>
+    <aura:attribute name="zoomLevel" type="Integer" access="public"/>
+    <aura:attribute name="spacePoint" type="Space_Point__c" access="public"/>
+    <aura:attribute name="city" type="String" access="public"/>
+    <aura:attribute name="temperature" type="Decimal" access="public"/>
+    <aura:attribute name="weather" type="Weather_Daily_Forecast__c" access="public"/>
+    <aura:attribute name="message" type="String" 
+                    default="{!$Label.c.QuestionBeforeRegisteringForTrip}" access="public"/>
+    <aura:attribute name="title" type="String" default="{!$Label.c.AreYouSure}" />
+    <aura:attribute name="isModalOpen" type="Boolean" default="false" access="public"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:handler name="isButtonYes" event="c:EventButtonYes" action="{!c.submit}"/>
+    <aura:handler name="isButtonClose" event="c:EventButtonClose" action="{!c.closeModal}"/>
+    <aura:handler name="selectedTripId" event="c:SelectedTripEvt" action="{!c.getTripDetail}"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isModalOpen}">
+        <c:ConfirmationScreen title="{!v.title}" message = "{!v.message}"/>
+    </aura:if>
+    
+   <lightning:layout>
+           <lightning:layoutItem>
+        <c:CardTrips trips="{!v.trips}"/>
+       </lightning:layoutItem>
+       
+        <lightning:layoutItem flexibility="auto, no-grow" padding="around-small" size="6">
+            <div class="custom-box">
+                <aura:if isTrue="{!v.activeInformationTrip}">
+                    <lightning:card variant="Narrow" title="Trip Information" iconName="custom:custom18">
+                        <p class="slds-p-horizontal_small">
+                            <div class="slds-card slds-box slds-theme_shade">
+                                <h2 class="slds-text-heading--medium slds-truncate">{!v.trip.Name}</h2>
+                                <p>{!$Label.c.TripStartDate}&nbsp;<ui:outputText value="{!v.trip.Start_Date__c}"/></p>
+                                <p>{!$Label.c.TripFreeSeats}&nbsp;<ui:outputText value="{!v.trip.Free_Seats__c}"/></p>
+                                <p>{!$Label.c.TripCity}&nbsp;<ui:outputText value="{!v.trip.Departure_Space_Point__r.City__c}"/></p>
+                                <p>{!$Label.c.TripTemperatureInCity}&nbsp;<ui:outputText value="{!v.temperature}"/></p>
+                                <div class="slds-clearfix">
+                                    <div class="slds-float_left slds-p-top_xx-large">
+                                        <lightning:button variant="brand"
+                                                          label="Submit"
+                                                          title="Submit"
+                                                          onclick="{!c.openModal}"/>  
+                                    </div>
+                                </div>
+                            </div>
+                        </p>
+                    </lightning:card>
+                </aura:if>
+                
+                <lightning:card title="Map" iconName="custom:custom20">
+                    <div class="slds-card slds-box slds-theme_shade">
+                        <h2 class="slds-text-heading--medium slds-truncate">Selected Marker Value is {!v.selectedMarkerValue}</h2>
+                        <lightning:map markersTitle="{!v.markersTitle}"
+                                       selectedMarkerValue="{!v.selectedMarkerValue}"
+                                       onmarkerselect="{!c.handleMarkerSelect}" 
+                                       mapMarkers="{!v.mapMarkers}"
+                                       zoomLevel="{!v.zoomLevel}"/>
+                    </div>
+                </lightning:card>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

@@ -1,0 +1,25 @@
+<aura:component>
+    <aura:attribute name="trips" type="List" access="public"/>
+    <aura:attribute name="selectTripId" type="Id" access="public"/>
+    
+    <aura:registerEvent name="selectedTripId" type="c:SelectedTripEvt"/>
+    
+    <div class="c-container" >
+        <lightning:layout multipleRows="true">
+            <aura:iteration items="{!v.trips}" var="trip" indexVar="idx">
+                <lightning:layoutItem flexibility="auto" size="6" padding="around-small">
+                    <div data-record="{!idx}" onclick="{!c.getTripDetail}">
+                        <div >
+                            <figure class="slds-image slds-image--card">
+                                <img src="{!$Resource.PicturesForTrips+ '/' + trip.Name + '.png'}" title="{!trip.Name}"/>
+                                <figcaption class="slds-image__title slds-image__title--card slds-text-align_center">
+                                    <span class="slds-image__text slds-truncate" title="Image Title"><h2>{!trip.Name}</h2></span>
+                                </figcaption>
+                            </figure>
+                        </div>
+                    </div>
+                </lightning:layoutItem>
+            </aura:iteration>
+        </lightning:layout>
+    </div>
+</aura:component>
