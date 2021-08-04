@@ -1,0 +1,64 @@
+<apex:page showHeader="true" lightningStylesheets="true" standardController="Trip__c" extensions="TripInfoExtensions">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <apex:slds />
+        </head>
+        <apex:form >
+            <apex:pageBlock>
+                <div class="slds-media slds-no-space slds-grow">
+                    <div class="slds-media__figure">
+                        <svg aria-hidden="true" class="slds-icon slds-icon-standard-contact">
+                            <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#contact')}"></use>
+                        </svg>
+                    </div>
+                    <div class="slds-media__body">
+                        <p class="slds-text-title_caps slds-line-height_reset">Trip</p>
+                        <h1 class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate"  title="Trip Information">Trip Information</h1>
+                    </div>
+                </div>
+                <apex:pageBlockSection >
+                    <apex:outputField value="{!Trip__c.Name}"/>
+                    <apex:outputField value="{!Trip__c.Start_Date__c}"/>
+                    <apex:outputField value="{!Trip__c.Minimum_Age__c}"/>
+                    <apex:outputField value="{!Trip__c.Crew__c}"/>
+                    <apex:outputField value="{!Trip__c.LastModifiedById}"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+        <apex:form>
+            <apex:pageBlock>
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton action="{!Edit}" value="Edit"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </apex:form>
+        <apex:relatedList list="Flights__r" title="Related flights">
+            <apex:facet name="header"><h2>Flights</h2></apex:facet>
+        </apex:relatedList>
+        <apex:form>
+            <apex:pageBlock title="Registered tourists"> 
+                <apex:pageBlockTable value="{!Trip__c.Flights__r}" var="flights">
+                    <apex:column value="{!flights.Name}"/>
+                    <apex:column value="{!flights.Tourist__c}"/>
+                    <apex:column value="{!flights.Tourist__r.LastName__c}"/> 
+                    <apex:column value="{!flights.Tourist__r.Birthdate__c}"/> 
+                    <apex:column value="{!flights.Tourist__r.Email__c}"/> 
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+        <apex:form>
+            <apex:pageBlock title="Not registered tourists">
+                <apex:pageBlockTable value="{!notRegistered}" var="tourists">
+                    <apex:column value="{!tourists.Name}"/> 
+                    <apex:column value="{!tourists.LastName__c}"/> 
+                    <apex:column value="{!tourists.Age__c}"/> 
+                    <apex:column value="{!tourists.Email__c}"/> 
+                    <apex:column value="{!tourists.Upcoming_Flight_Count__c}"/> 
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+    </html>
+</apex:page>
