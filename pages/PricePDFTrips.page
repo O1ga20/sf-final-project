@@ -1,0 +1,20 @@
+<apex:page renderAs="PDF" standardController="Tourist__c" extensions="PricePDFTripsExtensions">
+    <head><center><h1>Price List</h1></center></head>
+    <apex:form>
+        <apex:pageBlock title="Space tourism"> 
+            <apex:pageBlockTable value="{!trips}" var="trip" style="width:100%; text-align:center;" frame="lhs" cellpadding="20px" border="1px">
+                <apex:column value="{!trip.Name}"/>
+                <apex:column value="{!trip.Start_Date__c}"/>
+                <apex:column headerValue="Cosmodrome" value="{!trip.Departure_Space_Point__r.Name}"/>
+                <apex:column value="{!trip.Departure_Space_Point__r.City__c}"/>
+                <apex:column headerValue="Price($)">
+                    <apex:repeat value="{!price}" var="priceBook"> 
+                        <apex:outputText rendered="{!IF(priceBook.Name =trip.Name,true,false)}">
+                            {!priceBook.UnitPrice}
+                        </apex:outputText>
+                    </apex:repeat>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

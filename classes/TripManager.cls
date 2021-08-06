@@ -59,7 +59,9 @@ public class TripManager {
             SELECT Name,
             Minimum_Age__c,
             Start_Date__c,
+            End_Date__c,
             Free_Seats__c,
+            Departure_Space_Point__r.Name,
             Departure_Space_Point__r.City__c
             FROM Trip__c
             WHERE Minimum_Age__c <: tourist.Age__c
@@ -68,6 +70,7 @@ public class TripManager {
                 FROM Flight__c 
                 WHERE Tourist__c = :tourist.Id)
             AND Free_Seats__c > 0
+            ORDER BY Name
         ];
         return trips;
     }
