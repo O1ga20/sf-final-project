@@ -34,5 +34,9 @@
     closeModal : function(component, event) {
         let isModalOpen = event.getSource();
         component.set("v.isModalOpen", false);
+    },
+    
+    getPrice : function(component, event, helper) {
+        helper.getSiteWithPrice(component, event);
     }
 })

@@ -6,28 +6,90 @@
                     City: 'Grodno',
                     Country: 'Belarus'
                 },
-                title: 'Belarus',
-                value: 'Grodno',
+                title: 'SP-0001',
+                value: 'Belarus',
                 icon: 'custom:custom26'
-                
             },
             {
                 location: {
                     City: 'Dubai',
                     Country: 'United-Arab-Emirates'
                 },
-                value: 'Dubai',
+                value: 'United-Arab-Emirates',
                 icon: 'custom:custom96',
-                title: 'United-Arab-Emirates'
+                title: 'SP-0003'
             },
             {
                 location: {
                     City: 'Sydney',
                     Country: 'Australia'
                 },
-                value: 'Sydney',
+                value: 'Australia',
                 icon: 'custom:custom92',
-                title: 'Australia'
+                title: 'SP-0004'
+            },
+            {
+                location: {
+                    City: 'Moscow',
+                    Country: 'Russia'
+                },
+                title: 'SP-0005',
+                value: 'Russia',
+                icon: 'custom:custom26'
+            },
+            {
+                location: {
+                    City: 'Beijing',
+                    Country: 'China'
+                },
+                title: 'SP-0006',
+                value: 'China',
+                icon: 'custom:custom26'
+            },
+            {
+                location: {
+                    City: 'Ottawa',
+                    Country: 'Canada'
+                },
+                title: 'SP-0007',
+                value: 'Canada',
+                icon: 'custom:custom26'
+            },
+            {
+                location: {
+                    City: 'Rome',
+                    Country: 'Italy'
+                },
+                title: 'SP-0008',
+                value: 'Italy',
+                icon: 'custom:custom26'
+            },
+            {
+                location: {
+                    City: 'Washington',
+                    Country: 'USA'
+                },
+                title: 'SP-0009',
+                value: 'USA',
+                icon: 'custom:custom26'
+            },
+            {
+                location: {
+                    City: 'Brazil',
+                    Country: 'Brazil'
+                },
+                title: 'SP-0010',
+                value: 'Brazil',
+                icon: 'custom:custom26'
+            },
+            {
+                location: {
+                    City: 'Buenos Aires',
+                    Country: 'Argentina'
+                },
+                title: 'SP-0011',
+                value: 'Argentina',
+                icon: 'custom:custom26'
             }
         ]);
         component.set('v.markersTitle', 'Choose');
@@ -169,5 +231,10 @@
             }
         );
         toastEvent.fire();
+    },
+    
+    getSiteWithPrice : function(component, event) {
+        const touristId = component.get("v.touristId");
+        window.open('https://price-space-tourism-developer-edition.ap24.force.com/?Id='+ touristId); 
     }
 })
